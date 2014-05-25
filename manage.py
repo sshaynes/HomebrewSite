@@ -1,4 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env pythontry:
+try:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+except ImportError:
+    pass 
 import os
 import sys
 

@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h&c9azmq3bb!g8k@d_g20w)_)3qs@8p#eq%y-vgy%+$2+&#npz'
+SECRET_KEY = 'nai66=(f2ddnz&!1hk&zkwboeoz*q%q4m1p8lf@24)64i4*jpo'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -57,8 +57,12 @@ WSGI_APPLICATION = 'HomebrewSite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'homebrew',
+        'USER': 'root',
+        'PASWORD': 'H0meBrew!',
+        'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
+        'PORT': '3306',
     }
 }
 
