@@ -45,6 +45,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'homebrew',
 )
 
 ROOT_URLCONF = 'HomebrewSite.urls'
@@ -60,8 +61,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'homebrew',
         'USER': 'root',
-        'PASWORD': 'H0meBrew!',
-        'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
+        'PASSWORD': 'H0meBrew!',
+        #'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
+        'HOST': '127.0.0.1',
         'PORT': '3306',
     }
 }
