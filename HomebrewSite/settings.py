@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'homebrew',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -45,7 +46,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'homebrew',
 )
 
 ROOT_URLCONF = 'HomebrewSite.urls'
@@ -60,10 +60,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'homebrew',
+#         'USER': 'steve',
+#         'PASSWORD': 'steve123',
+#         'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
         'USER': 'root',
         'PASSWORD': 'H0meBrew!',
-        #'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
         'HOST': '127.0.0.1',
+        #'HOST': '54.187.161.116',
         'PORT': '3306',
     }
 }
