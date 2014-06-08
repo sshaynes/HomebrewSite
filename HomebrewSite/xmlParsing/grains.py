@@ -1,0 +1,23 @@
+class Grains:
+	def __init__(self):
+		self.origin = ""
+		self.recommendMash = ""
+		self.notes = ""
+		self.addAfterBoil = ""
+		self.amount = ""
+		self.maxInBatch = ""
+		self.displayAmount = ""
+		self.protein = ""
+		self.type = ""
+		self.supplier = ""
+		self.displayColor = ""
+		self.name = ""
+		self.potential = ""
+		self.moisture = ""
+		self.coarseFineDiff = ""
+		self.color = ""
+		self.extractSubstitue = ""
+		self.diastaticPower = ""
+		self.ibuGalPerLb = ""
+		self.yeild = ""
+		
