@@ -60,9 +60,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'homebrew',
-#         'USER': 'steve',
-#         'PASSWORD': 'steve123',
-#         'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
+        # 'USER': 'steve',
+        # 'PASSWORD': 'steve123',
+        # 'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
         'USER': 'root',
         'PASSWORD': 'H0meBrew!',
         'HOST': '127.0.0.1',
@@ -89,3 +89,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]

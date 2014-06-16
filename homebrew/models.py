@@ -112,3 +112,46 @@ class RecipeIngredients(models.Model):
     ingredient = models.ForeignKey(Ingredients)
     unit = models.ForeignKey(Units)
     quantity = models.DecimalField(decimal_places=2,max_digits=6)
+	
+class Hop(models.Model):
+	origin = models.CharField(max_length=200)
+	time = models.CharField(max_length=200)
+	notes = models.CharField(max_length=5000)
+	alpha = models.CharField(max_length=200)
+	amount = models.CharField(max_length=200)
+	use = models.CharField(max_length=200)
+	displayAmount = models.CharField(max_length=200)
+	type = models.CharField(max_length=200)
+	beta = models.CharField(max_length=200)
+	form = models.CharField(max_length=200)
+	displayTime = models.CharField(max_length=200)
+	name = models.CharField(max_length=200)
+	hsi = models.CharField(max_length=200)
+	pub_date = models.DateTimeField('date published')
+	def __str__(self):
+		return self.name
+	
+class Grain(models.Model):
+	origin = models.CharField(max_length=200, null=True, blank=True, default="")
+	recommendMash = models.CharField(max_length=200)
+	notes = models.CharField(max_length=5000, null=True, blank=True, default="")
+	addAfterBoil = models.CharField(max_length=200)
+	amount = models.CharField(max_length=200)
+	maxInBatch = models.CharField(max_length=200)
+	displayAmount = models.CharField(max_length=200)
+	protein = models.CharField(max_length=200)
+	type = models.CharField(max_length=200)
+	supplier = models.CharField(max_length=200, null=True, blank=True, default="")
+	displayColor = models.CharField(max_length=200)
+	name = models.CharField(max_length=200)
+	potential = models.CharField(max_length=200)
+	moisture = models.CharField(max_length=200)
+	coarseFineDiff = models.CharField(max_length=200)
+	color = models.CharField(max_length=200)
+	extractSubstitue = models.CharField(max_length=200, blank=True, null=True, default="")
+	diastaticPower = models.CharField(max_length=200)
+	ibuGalPerLb = models.CharField(max_length=200)
+	yeild = models.CharField(max_length=200)
+	pub_date = models.DateTimeField('date published')
+	def __str__(self):
+		return self.name
