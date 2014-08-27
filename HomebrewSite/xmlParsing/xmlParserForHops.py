@@ -1,5 +1,17 @@
 import xml.etree.ElementTree as ET
+import os
+import sys
+import pymysql
+
+pymysql.install_as_MySQLdb()
+sys.path.insert(0, 'C:/Users/Drew/Documents/GitHub/HomebrewSite/')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "HomebrewSite.settings")
+
 from hops import Hops
+from django.utils import timezone
+from homebrew.models import Hop
+
+
 
 tree = ET.parse('Hops_XML.xml')
 root = tree.getroot()
@@ -39,5 +51,8 @@ for element in root.iter('*'):
 		hop.hsi = element.text
 		
 for item in listOfHops:
-	print(item)
+	hopToSave = Hop(origin=item.origin, time=item.time, notes=item.notes, alpha=item.alpha, amount=item.amount,
+	use=item.use, displayAmount=item.displayAmount, type=item.type, beta=item.beta, form=item.form, displayTime=item.displayTime,
+	name=item.name, hsi=item.hsi, pub_date=timezone.now());
+	hopToSave.save();
 		

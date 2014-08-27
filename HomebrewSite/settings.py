@@ -60,12 +60,21 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'homebrew',
+<<<<<<< HEAD
         'USER': 'steve',
         'PASSWORD': 'steve123',
         'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
 #         'USER': 'root',
 #         'PASSWORD': 'H0meBrew!',
 #         'HOST': '127.0.0.1',
+=======
+        # 'USER': 'steve',
+        # 'PASSWORD': 'steve123',
+        # 'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
+        'USER': 'root',
+        'PASSWORD': 'H0meBrew!',
+        'HOST': '127.0.0.1',
+>>>>>>> origin/master
         #'HOST': '54.187.161.116',
         'PORT': '3306',
     }
@@ -90,4 +99,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+<<<<<<< HEAD
 AUTH_PROFILE_MODULE = 'homebrew.Profiles'
+=======
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+>>>>>>> origin/master

@@ -1,5 +1,15 @@
 import xml.etree.ElementTree as ET
+import os
+import sys
+import pymysql
+
+pymysql.install_as_MySQLdb()
+sys.path.insert(0, 'C:/Users/Drew/Documents/GitHub/HomebrewSite/')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "HomebrewSite.settings")
+
 from grains import Grains
+from django.utils import timezone
+from homebrew.models import Grain
 
 tree = ET.parse('Grain_XML.xml')
 root = tree.getroot()
@@ -52,5 +62,12 @@ for element in root.iter('*'):
 		grain.ibuGalPerLb = element.text	
 	elif element.tag == "YIELD":
 		grain.yeild = element.text	
-print(listOfGrains)
+
+for item in listOfGrains:
+	grainToSave = Grain(origin=item.origin, recommendMash=item.recommendMash, notes=item.notes, addAfterBoil=item.addAfterBoil,
+	amount=item.amount, maxInBatch=item.maxInBatch, displayAmount=item.displayAmount, protein=item.protein, type=item.type,
+	supplier=item.supplier, displayColor=item.displayColor, name=item.name, potential=item.potential, moisture=item.moisture,
+	coarseFineDiff=item.coarseFineDiff, color=item.color, extractSubstitue=item.extractSubstitue, diastaticPower=item.diastaticPower,
+	ibuGalPerLb=item.ibuGalPerLb, yeild=item.yeild, pub_date=timezone.now());
+	grainToSave.save();
 		
