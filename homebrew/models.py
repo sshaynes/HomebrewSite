@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class Profiles(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(User)
     age = models.IntegerField()
     location = models.CharField(max_length=200)
@@ -11,87 +11,87 @@ class Profiles(models.Model):
     yearsExperience = models.IntegerField()
     avatarURL = models.CharField(max_length=5000)
 
-class Categories(models.Model):
+class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
 
-class Recipes(models.Model):
+class Recipe(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
-    category = models.ForeignKey(Categories)
+    category = models.ForeignKey(Category)
     description = models.CharField(max_length=5000)
 
-class Conversations(models.Model):
+class Conversation(models.Model):
     id = models.AutoField(primary_key=True)
     started = models.DateTimeField()
 
-class UsersFollowing(models.Model):
+class UserFollowing(models.Model):
     id = models.AutoField(primary_key=True)
     followingUser = models.ForeignKey(User, related_name='followingUser')
     followedUser = models.ForeignKey(User, related_name='followedUser')
     
-class RecipeReviews(models.Model):
+class RecipeReview(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
     text = models.TextField()
     rating = models.IntegerField()
     
-class RecipeSteps(models.Model):
+class RecipeStep(models.Model):
     id = models.AutoField(primary_key=True)
-    recipe = models.ForeignKey(Recipes)
+    recipe = models.ForeignKey(Recipe)
     time = models.DateTimeField()
     text = models.TextField(max_length=5000)
     
-class RecipeAttributes(models.Model):
+class RecipeAttribute(models.Model):
     id = models.AutoField(primary_key=True)
-    recipe = models.ForeignKey(Recipes)
+    recipe = models.ForeignKey(Recipe)
     name = models.TextField()
     
-class Units(models.Model):
+class Unit(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(max_length=50)
     abbreviation = models.TextField(max_length=10)
     
-class Vendors(models.Model):
+class Vendor(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(max_length=500)
     url = models.TextField(max_length=5000)
     location = models.TextField(max_length=5000)
     
-class VendorReviews(models.Model):
+class VendorReview(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
-    vendor = models.ForeignKey(Vendors)
+    vendor = models.ForeignKey(Vendor)
     rating = models.IntegerField()
     description = models.TextField(max_length=5000)
     
-class Posts(models.Model):
+class Post(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
     text = models.TextField()
 
-class Messages(models.Model):
+class Message(models.Model):
     id = models.AutoField(primary_key=True)
     authorUser = models.ForeignKey(User)
-    conversation = models.ForeignKey(Conversations)
+    conversation = models.ForeignKey(Conversation)
 
-class UsersConversations(models.Model):
+class UserConversation(models.Model):
     id = models.AutoField(primary_key=True)
-    conversation = models.ForeignKey(Conversations)
+    conversation = models.ForeignKey(Conversation)
     user = models.ForeignKey(User)
     joined = models.DateTimeField()
 
-class News(models.Model):
+class New(models.Model):
     id = models.AutoField(primary_key=True)
     authorUser = models.ForeignKey(User)
     text = models.TextField(max_length=5000)
     date = models.DateTimeField()
     location = models.TextField(max_length=5000)
     
-#class IngredientsReviews(models.Model):
+#class IngredientReview(models.Model):
     #id = models.AutoField(primary_key=True)
     #user = models.ForeignKey(User)
-    #ingredient = models.ForeignKey(Ingredients)
+    #ingredient = models.ForeignKey(Ingredient)
     #text = models.TextField(max_length=5000)
 
 class Hop(models.Model):
@@ -108,7 +108,7 @@ class Hop(models.Model):
     displayTime = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     hsi = models.CharField(max_length=200)
-    vendor = models.ForeignKey(Vendors, null=True)
+    vendor = models.ForeignKey(Vendor, null=True)
     pub_date = models.DateTimeField('date published')
     def __str__(self):
         return self.name
@@ -134,7 +134,7 @@ class Grain(models.Model):
     diastaticPower = models.CharField(max_length=200)
     ibuGalPerLb = models.CharField(max_length=200)
     yeild = models.CharField(max_length=200)
-    vendor = models.ForeignKey(Vendors, null=True)
+    vendor = models.ForeignKey(Vendor, null=True)
     pub_date = models.DateTimeField('date published')
     def __str__(self):
         return self.name
@@ -163,16 +163,16 @@ class Yeast(models.Model):
 	def __str__(self):
 		return self.name
 
-class RecipeHops(models.Model):
+class RecipeHop(models.Model):
     id = models.AutoField(primary_key=True)
-    recipe = models.ForeignKey(Recipes)
-    hop = models.ForeignKey(Hops)
-    unit = models.ForeignKey(Units)
+    recipe = models.ForeignKey(Recipe)
+    hop = models.ForeignKey(Hop)
+    unit = models.ForeignKey(Unit)
     quantity = models.DecimalField(decimal_places=2,max_digits=6)
 
-class RecipeGrains(models.Model):
+class RecipeGrain(models.Model):
     id = models.AutoField(primary_key=True)
-    recipe = models.ForeignKey(Recipes)
-    grain = models.ForeignKey(Grains)
-    unit = models.ForeignKey(Units)
+    recipe = models.ForeignKey(Recipe)
+    grain = models.ForeignKey(Grain)
+    unit = models.ForeignKey(Unit)
     quantity = models.DecimalField(decimal_places=2,max_digits=6)
