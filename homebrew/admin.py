@@ -1,5 +1,5 @@
 from django.contrib import admin
-from homebrew.models import Hop, Grain
+from homebrew.models import Hop, Grain, Yeast
 
 class HopAdmin(admin.ModelAdmin):
 	fieldsets = [
@@ -49,6 +49,33 @@ class GrainAdmin(admin.ModelAdmin):
 	list_display = ('name', 'pub_date', 'notes')
 	list_filter = ['pub_date']
 	search_fields = ['name']
+class YeastAdmin(admin.ModelAdmin):
+	fieldsets = [
+		(None,               {'fields': ['name']}),
+		(None,               {'fields': ['type']}),
+		(None,               {'fields': ['form']}),
+		(None,               {'fields': ['laboratory']}),
+		(None,               {'fields': ['amount']}),
+		(None,               {'fields': ['amount_is_weight']}),
+		(None,               {'fields': ['product_id']}),
+		(None,               {'fields': ['min_temperature']}),
+		(None,               {'fields': ['max_temperature']}),
+		(None,               {'fields': ['flocculation']}),
+		(None,               {'fields': ['attenuation']}),
+		(None,               {'fields': ['notes']}),
+		(None,               {'fields': ['best_for']}),
+		(None,               {'fields': ['times_cultured']}),
+		(None,               {'fields': ['max_reuse']}),
+		(None,               {'fields': ['add_to_secondary']}),
+		(None,               {'fields': ['display_amount']}),
+		(None,               {'fields': ['disp_min_temp']}),
+		(None,               {'fields': ['disp_max_temp']}),
+		('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
+	]
+	list_display = ('name', 'pub_date', 'notes')
+	list_filter = ['pub_date']
+	search_fields = ['name']
 
 admin.site.register(Hop, HopAdmin)
 admin.site.register(Grain, GrainAdmin)
+admin.site.register(Yeast, YeastAdmin)

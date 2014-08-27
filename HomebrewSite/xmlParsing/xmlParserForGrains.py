@@ -15,7 +15,7 @@ tree = ET.parse('Grain_XML.xml')
 root = tree.getroot()
 
 listOfGrains = []
-grain = Grains()
+grain = Grain()
 
 for element in root.iter('*'):
 	if element.tag == "FERMENTABLE":

@@ -17,7 +17,7 @@ tree = ET.parse('Hops_XML.xml')
 root = tree.getroot()
 
 listOfHops = []
-hop = Hops()
+hop = Hop()
 for element in root.iter('*'):
 	if element.tag == "HOP":
 		if hop.name != "":
