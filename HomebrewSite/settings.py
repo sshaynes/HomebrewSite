@@ -66,13 +66,6 @@ DATABASES = {
 #         'USER': 'root',
 #         'PASSWORD': 'H0meBrew!',
 #         'HOST': '127.0.0.1',
-        # 'USER': 'steve',
-        # 'PASSWORD': 'steve123',
-        # 'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
-        'USER': 'root',
-        'PASSWORD': 'H0meBrew!',
-        'HOST': '127.0.0.1',
-        #'HOST': '54.187.161.116',
         'PORT': '3306',
     }
 }
