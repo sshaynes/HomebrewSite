@@ -4,8 +4,8 @@ import HomebrewSite
 
 # Create your models here.
 
-class HomebrewUsers(models.Model):
-    id = models.AutoField(primary_key=True)
+class Profiles(models.Model):
+    user = models.OneToOneField(User)
     age = models.IntegerField()
     location = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
