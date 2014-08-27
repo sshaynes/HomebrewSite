@@ -88,12 +88,6 @@ class News(models.Model):
     date = models.DateTimeField()
     location = models.TextField(max_length=5000)
     
-#class IngredientsReviews(models.Model):
-    #id = models.AutoField(primary_key=True)
-    #user = models.ForeignKey(User)
-    #ingredient = models.ForeignKey(Ingredients)
-    #text = models.TextField(max_length=5000)
-
 class Hops(models.Model):
     origin = models.CharField(max_length=200)
     time = models.CharField(max_length=200)
@@ -152,3 +146,15 @@ class RecipeGrains(models.Model):
     grain = models.ForeignKey(Grains)
     unit = models.ForeignKey(Units)
     quantity = models.DecimalField(decimal_places=2,max_digits=6)
+
+class HopsReviews(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User)
+    ingredient = models.ForeignKey(Hops)
+    text = models.TextField(max_length=5000)
+
+class GrainsReviews(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User)
+    ingredient = models.ForeignKey(Grains)
+    text = models.TextField(max_length=5000)
