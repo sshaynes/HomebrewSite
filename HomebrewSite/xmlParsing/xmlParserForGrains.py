@@ -1,9 +1,13 @@
 import xml.etree.ElementTree as ET
 import os
 import sys
-import pymysql
 
-pymysql.install_as_MySQLdb()
+try:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+except ImportError:
+    pass
+
 sys.path.insert(0, 'C:/Users/Drew/Documents/GitHub/HomebrewSite/')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "HomebrewSite.settings")
 
@@ -25,7 +29,7 @@ for element in root.iter('*'):
 	elif element.tag == "ORIGIN":
 		grain.origin = element.text
 	elif element.tag == "RECOMMEND_MASH":
-		grain.recommendMash = element.text	
+		grain.recommendMash = element.text
 	elif element.tag == "NOTES":
 		grain.notes = element.text
 	elif element.tag == "ADD_AFTER_BOIL":
@@ -51,17 +55,17 @@ for element in root.iter('*'):
 	elif element.tag == "MOISTURE":
 		grain.moisture = element.text
 	elif element.tag == "COARSE_FINE_DIFF":
-		grain.coarseFineDiff = element.text		
+		grain.coarseFineDiff = element.text
 	elif element.tag == "COLOR":
 		grain.color = element.text
 	elif element.tag == "EXTRACT_SUBSTITUTE":
 		grain.extractSubstitue = element.text
 	elif element.tag == "DIASTATIC_POWER":
-		grain.diastaticPower = element.text	
+		grain.diastaticPower = element.text
 	elif element.tag == "IBU_GAL_PER_LB":
-		grain.ibuGalPerLb = element.text	
+		grain.ibuGalPerLb = element.text
 	elif element.tag == "YIELD":
-		grain.yeild = element.text	
+		grain.yeild = element.text
 
 for item in listOfGrains:
 	grainToSave = Grain(origin=item.origin, recommendMash=item.recommendMash, notes=item.notes, addAfterBoil=item.addAfterBoil,
@@ -70,4 +74,4 @@ for item in listOfGrains:
 	coarseFineDiff=item.coarseFineDiff, color=item.color, extractSubstitue=item.extractSubstitue, diastaticPower=item.diastaticPower,
 	ibuGalPerLb=item.ibuGalPerLb, yeild=item.yeild, pub_date=timezone.now());
 	grainToSave.save();
-		
+

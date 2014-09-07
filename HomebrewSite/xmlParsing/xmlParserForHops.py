@@ -1,9 +1,13 @@
 import xml.etree.ElementTree as ET
 import os
 import sys
-import pymysql
 
-pymysql.install_as_MySQLdb()
+try:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+except ImportError:
+    pass
+
 sys.path.insert(0, 'C:/Users/Drew/Documents/GitHub/HomebrewSite/')
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "HomebrewSite.settings")
 
@@ -26,7 +30,7 @@ for element in root.iter('*'):
 	elif element.tag == "ORIGIN":
 		hop.origin = element.text
 	elif element.tag == "TIME":
-		hop.time = element.text	
+		hop.time = element.text
 	elif element.tag == "NOTES":
 		hop.notes = element.text
 	elif element.tag == "ALPHA":
@@ -49,10 +53,10 @@ for element in root.iter('*'):
 		hop.name = element.text
 	elif element.tag == "HSI":
 		hop.hsi = element.text
-		
+
 for item in listOfHops:
 	hopToSave = Hop(origin=item.origin, time=item.time, notes=item.notes, alpha=item.alpha, amount=item.amount,
 	use=item.use, displayAmount=item.displayAmount, type=item.type, beta=item.beta, form=item.form, displayTime=item.displayTime,
 	name=item.name, hsi=item.hsi, pub_date=timezone.now());
 	hopToSave.save();
-		
+
