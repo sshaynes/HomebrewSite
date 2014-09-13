@@ -12,11 +12,11 @@ from HomebrewSite.views.user.UpdateUserProfileView import UpdateUserProfileView
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'HomebrewSite.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+  # Examples:
+  # url(r'^$', 'HomebrewSite.views.home', name='home'),
+  # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+  url(r'^admin/', include(admin.site.urls)),
 	url(r'^auth/login/$', LoginView.as_view()),
 	url(r'^auth/logout/$', LogoutView.as_view()),
 	url(r'^auth/passwordReset/$', PasswordResetView.as_view()),
