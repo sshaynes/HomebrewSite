@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
@@ -16,7 +18,13 @@ urlpatterns = patterns('',
   # url(r'^$', 'HomebrewSite.views.home', name='home'),
   # url(r'^blog/', include('blog.urls')),
 
+  #index
+  url(r'^$', 'HomebrewSite.views.home.index', name="home"),
+
+  #admin
   url(r'^admin/', include(admin.site.urls)),
+
+  # RESTful API
 	url(r'^auth/login/$', LoginView.as_view()),
 	url(r'^auth/logout/$', LogoutView.as_view()),
 	url(r'^auth/passwordReset/$', PasswordResetView.as_view()),

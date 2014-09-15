@@ -26,6 +26,17 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Map AngularJS website as a Static folder
+STATICFILES_DIRS = (
+    BASE_DIR + "/../HomebrewWebsite",
+)
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
 
 # Application definition
 
@@ -63,7 +74,7 @@ DATABASES = {
 #        'USER': 'steve',
 #        'PASSWORD': 'steve123',
 #        'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
-         'USER': 'root',
+         'USER': 'brew_admin',
          'PASSWORD': 'H0meBrew!',
          'HOST': '127.0.0.1',
         'PORT': '3306',
