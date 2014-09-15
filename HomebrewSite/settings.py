@@ -26,11 +26,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Map AngularJS website as a Static folder
-STATICFILES_DIRS = (
-    BASE_DIR + "/../HomebrewWebsite",
-)
-
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -63,24 +58,6 @@ ROOT_URLCONF = 'HomebrewSite.urls'
 
 WSGI_APPLICATION = 'HomebrewSite.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'homebrew',
-#        'USER': 'steve',
-#        'PASSWORD': 'steve123',
-#        'HOST': 'ec2-54-187-161-116.us-west-2.compute.amazonaws.com',
-         'USER': 'brew_admin',
-         'PASSWORD': 'H0meBrew!',
-         'HOST': '127.0.0.1',
-        'PORT': '3306',
-    }
-}
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
@@ -102,3 +79,10 @@ STATIC_URL = '/static/'
 
 AUTH_PROFILE_MODULE = 'homebrew.Profiles'
 TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+
+
+# Import your Local Settings file and skip if one is not available
+try:
+    from local_settings import *
+except ImportError:
+    pass
