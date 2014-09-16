@@ -1,8 +1,29 @@
 from django.http import HttpResponse
+from django.utils.html import escape
 from django.views.generic import View
+import json
 
 class LoginView(View):
 
 	def get(self, request, *args, **kwargs):
-		response = HttpResponse('2b1189a188b44ad18c35e113ac6ceead')
+
+		response = '6UjKyxZXtVOkLzKMr3oyxb1gF2X4VWhY'
+		response += '_GET'
+
+		response = repr(request.GET)
+		# response = json.loads(request.GET)
+
+		response = HttpResponse(response)
+		return response
+
+
+	def post(self, request, *args, **kwargs):
+
+		response = '6UjKyxZXtVOkLzKMr3oyxb1gF2X4VWhY'
+		response += '_POST'
+
+		response = repr(request.POST)
+		# response = json.loads(request.POST)
+
+		response = HttpResponse(response)
 		return response
