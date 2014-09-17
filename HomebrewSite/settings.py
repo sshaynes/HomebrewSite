@@ -83,6 +83,6 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 # Import your Local Settings file and skip if one is not available
 try:
-    from local_settings import *
+    from HomebrewSite.local_settings import *
 except ImportError:
     pass

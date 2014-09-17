@@ -22,8 +22,10 @@ class LoginView(View):
 		response = '6UjKyxZXtVOkLzKMr3oyxb1gF2X4VWhY'
 		response += '_POST'
 
-		response = repr(request.POST)
-		# response = json.loads(request.POST)
-
+		response = repr(request.body)
 		response = HttpResponse(response)
+
+		# response = json.loads(request.body)
+		# response = HttpResponse(response[0])
+
 		return response
