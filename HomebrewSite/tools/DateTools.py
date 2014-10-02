@@ -1,6 +1,5 @@
 import json
 import datetime
-import dateutil.parser
 class DateTools:
 	#takes in python datetime, returns a string in ISO 8601 format	
 	def datetimeToString(date):
