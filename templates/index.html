@@ -9,6 +9,9 @@
   <script src="{{ STATIC_URL }}js/directives.js"></script>
 {% endblock %}
 {% block content %}
+
+  <div ng-header></div>
+
   <div class="padded-content">
     <div id="main-content" class="container">
 <!--
@@ -23,6 +26,8 @@
       <div ng-view></div>
     </div>
   </div>
+
+<div ng-footer></div>
 {% endblock %}
 {% block extra_content %}
 <script type="text/javascript"></script>
