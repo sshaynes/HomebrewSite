@@ -1,5 +1,19 @@
 from django.contrib import admin
-from homebrew.models import Hop, Grain, Yeast
+from homebrew.models import Hop, Grain, Yeast, Profile
+
+class UserProfileAdmin(admin.ModelAdmin):
+  fieldsets = [
+    (None,               {'fields': ['user']}),
+    (None,               {'fields': ['name']}),
+    (None,               {'fields': ['age']}),
+    (None,               {'fields': ['location']}),
+    (None,               {'fields': ['yearsExperience']}),
+    (None,               {'fields': ['avatarURL']}),
+  ]
+  list_display = ('user', 'name', 'yearsExperience')
+  list_filter = ['user']
+  search_fields = ['user']
+
 
 class HopAdmin(admin.ModelAdmin):
 	fieldsets = [
@@ -21,7 +35,7 @@ class HopAdmin(admin.ModelAdmin):
 	list_display = ('name', 'pub_date', 'notes')
 	list_filter = ['pub_date']
 	search_fields = ['name']
-	
+
 class GrainAdmin(admin.ModelAdmin):
 	fieldsets = [
 		(None,               {'fields': ['name']}),
@@ -79,3 +93,4 @@ class YeastAdmin(admin.ModelAdmin):
 admin.site.register(Hop, HopAdmin)
 admin.site.register(Grain, GrainAdmin)
 admin.site.register(Yeast, YeastAdmin)
+admin.site.register(Profile, UserProfileAdmin)
