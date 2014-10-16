@@ -22,6 +22,7 @@ class CreateUserView(View):
 		if(password == ''):
 			return HttpResponse('A password must be supplied')
 		user = User(username=username,password=password)
+		user.save();
 		profile = Profile(user=user,
 		age = request.POST.get('age',''),
 		location = request.POST.get('location',''),
