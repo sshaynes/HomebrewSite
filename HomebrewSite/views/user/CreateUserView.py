@@ -3,6 +3,7 @@ from django.views.generic import View
 from homebrew.models import Profile
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
+from django.db import IntegrityError
 import json
 import os
 import sys
@@ -34,15 +35,15 @@ class CreateUserView(View):
 		if(password == ''):
 			return HttpResponse('A password must be supplied')
 
-		# Create and save user object
+		# Create and try to save the new user object
 		user = User(username=username,password=password)
 		try:
 			user.save();
 		except IntegrityError:
-			return HttpResponse('user name is already taken')
+			return HttpResponse('Username is already taken!')
 		except:
 			return HttpResponse('Error saving user', sys.exc_info())
-		
+
 
 		# Create new user profile
 		profile = Profile(user=user,

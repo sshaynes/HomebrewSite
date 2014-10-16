@@ -12,16 +12,17 @@ import logging
 logger = logging.getLogger(__name__)
 
 class LoginView(View):
-	
+
 	def get(self, request, *args, **kwargs):
 		#pending successful login
 		s = SessionStore()
 		s['last_login'] = DateTools.getNowAsString()
 		s['userid'] = 1	#this should be set to the user id returned from authentication
 		s.save()
-		response = s.session_key
+		response = s.session_key + " | Last_login: " + s['last_login']
 
 		return HttpResponse(response)
+
 
 	def post(self, request, *args, **kwargs):
 
@@ -30,6 +31,6 @@ class LoginView(View):
 		s['last_login'] = DateTools.getNowAsString()
 		s['userid'] = 1	#this should be set to the user id returned from authentication
 		s.save()
-		response = s.session_key
+		response = s.session_key + " | Last_login: " + s['last_login']
 
 		return HttpResponse(response)
