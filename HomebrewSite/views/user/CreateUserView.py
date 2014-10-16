@@ -36,7 +36,13 @@ class CreateUserView(View):
 
 		# Create and save user object
 		user = User(username=username,password=password)
-		user.save();
+		try:
+			user.save();
+		except IntegrityError:
+			return HttpResponse('user name is already taken')
+		except:
+			return HttpResponse('Error saving user', sys.exc_info())
+		
 
 		# Create new user profile
 		profile = Profile(user=user,
@@ -44,7 +50,9 @@ class CreateUserView(View):
 			location = data.get('location',''),
 			name = data.get('name',''),
 			yearsExperience = data.get('yearsExperience',''),
-			avatarURL = data.get('avatarURL','')
+			avatarURL = data.get('avatarURL',''),
+			reg_date=timezone.now(),
+			update_date=timezone.now()
 		)
 
 		errorMsg = CreateUserView.validateProfile(profile)

@@ -10,6 +10,8 @@ class Profile(models.Model):
     name = models.CharField(max_length=200)
     yearsExperience = models.IntegerField()
     avatarURL = models.CharField(max_length=5000)
+    reg_date = models.DateTimeField('date registered')
+    update_date = models.DateTimeField('date updated')
 
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
