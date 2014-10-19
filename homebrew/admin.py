@@ -9,8 +9,10 @@ class UserProfileAdmin(admin.ModelAdmin):
     (None,               {'fields': ['location']}),
     (None,               {'fields': ['yearsExperience']}),
     (None,               {'fields': ['avatarURL']}),
+    (None,               {'fields': ['reg_date']}),
+    (None,               {'fields': ['update_date']}),
   ]
-  list_display = ('user', 'name', 'yearsExperience')
+  list_display = ('user', 'name', 'yearsExperience', 'reg_date')
   list_filter = ['user']
   search_fields = ['user']
 
