@@ -10,22 +10,15 @@
 {% endblock %}
 {% block content %}
 
+
   <div ng-header></div>
 
-  <div class="padded-content">
-    <div id="main-content" class="container">
-<!--
-      <div class="row">
-        <div class="span12">
-          <div class="pending-bg" pending-bar>
-            <div class="alert alert-warning">loading ...</div>
-          </div>
-        </div>
-      </div> -->
-      <!-- <ng-view view-state></ng-view> -->
-      <div ng-view></div>
-    </div>
+  <div id="main-content" class="container">
+
+    <div ng-view></div>
+
   </div>
+
 
 <div ng-footer></div>
 {% endblock %}
