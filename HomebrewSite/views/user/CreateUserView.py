@@ -9,6 +9,7 @@ import os
 import sys
 import datetime
 from django.utils import timezone
+from HomebrewSite.tools.ApiTools import ApiTools
 
 # import the logging library
 import logging
@@ -22,33 +23,35 @@ class CreateUserView(View):
 	@csrf_exempt
 	def post(self, request, *args, **kwargs):
 
+		contType = "content_type='application/json'"
+
 		# Make sure we're dealing with AJAX request
 		if not request.is_ajax():
-				return HttpResponseBadRequest('Expected an XMLHttpRequest')
+				return HttpResponse('Expected an XMLHttpRequest')
 
 		# Parse data from JSON
 		data = json.loads(request.body)
 
 		username = data.get('user','')
 		if(username == ''):
-			return HttpResponse('A username must be supplied')
+			return ApiTools.HttpJsonReponse('422', 'A username must be supplied')
 
 		password = data.get('password','')
 		if(password == ''):
-			return HttpResponse('A password must be supplied')
+			return ApiTools.HttpJsonReponse('422', 'A password must be supplied')
 
 		email = data.get('email','')
 		if(email == ''):
-			return HttpResponse('An email must be supplied')
+			return ApiTools.HttpJsonReponse('422', 'An email must be supplied')
 
 		# Create and try to save the new user object
 		user = User(username=username,password=password,email=email)
 		try:
 			user.save();
-		except IntegrityError:
-			return HttpResponse('Username is already taken!')
+		except IntegrityError as e:
+			return ApiTools.HttpJsonReponse('422', 'Username is already taken!')
 		except:
-			return HttpResponse('Error saving user', sys.exc_info())
+			return ApiTools.HttpJsonReponse('400', sys.exc_info())
 
 
 		# Create new user profile
@@ -67,15 +70,15 @@ class CreateUserView(View):
 		logger.warning(profile)
 		try:
 			profile.save()
-			response = 'Profile succesfully created'
+			return ApiTools.HttpJsonReponse('200', 'Profile succesfully created')
 		except:
-			response = 'Profile failed to create with error: ', sys.exc_info()
-		return HttpResponse(response)
+			return ApiTools.HttpJsonReponse('400', 'Profile failed to create with error: ' + sys.exc_info())
+
 		#return render(request, 'index.html', {}) may need this for csrf
 
 
 	def get(self, request, *args, **kwargs):
-		return HttpResponse('2b1189a188b44ad18c35e113ac6ceead')
+		ApiTools.HttpJsonReponse('200', '2b1189a188b44ad18c35e113ac6ceead')
 
 
 	@staticmethod
