@@ -4,7 +4,6 @@ from homebrew.models import Hop, Grain, Yeast, Profile
 class UserProfileAdmin(admin.ModelAdmin):
   fieldsets = [
     (None,               {'fields': ['user']}),
-    (None,               {'fields': ['name']}),
     (None,               {'fields': ['age']}),
     (None,               {'fields': ['location']}),
     (None,               {'fields': ['yearsExperience']}),
@@ -12,7 +11,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     (None,               {'fields': ['reg_date']}),
     (None,               {'fields': ['update_date']}),
   ]
-  list_display = ('user', 'name', 'yearsExperience', 'reg_date')
+  list_display = ('user', 'yearsExperience', 'reg_date')
   list_filter = ['user']
   search_fields = ['user']
 

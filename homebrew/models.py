@@ -7,7 +7,6 @@ class Profile(models.Model):
     user = models.OneToOneField(User)
     age = models.IntegerField()
     location = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
     yearsExperience = models.IntegerField()
     avatarURL = models.CharField(max_length=5000)
     reg_date = models.DateTimeField('date registered')
@@ -31,42 +30,42 @@ class UserFollowing(models.Model):
     id = models.AutoField(primary_key=True)
     followingUser = models.ForeignKey(User, related_name='followingUser')
     followedUser = models.ForeignKey(User, related_name='followedUser')
-    
+
 class RecipeReview(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
     text = models.TextField()
     rating = models.IntegerField()
-    
+
 class RecipeStep(models.Model):
     id = models.AutoField(primary_key=True)
     recipe = models.ForeignKey(Recipe)
     time = models.DateTimeField()
     text = models.TextField(max_length=5000)
-    
+
 class RecipeAttribute(models.Model):
     id = models.AutoField(primary_key=True)
     recipe = models.ForeignKey(Recipe)
     name = models.TextField()
-    
+
 class Unit(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(max_length=50)
     abbreviation = models.TextField(max_length=10)
-    
+
 class Vendor(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.TextField(max_length=500)
     url = models.TextField(max_length=5000)
     location = models.TextField(max_length=5000)
-    
+
 class VendorReview(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
     vendor = models.ForeignKey(Vendor)
     rating = models.IntegerField()
     description = models.TextField(max_length=5000)
-    
+
 class Post(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
@@ -89,7 +88,7 @@ class New(models.Model):
     text = models.TextField(max_length=5000)
     date = models.DateTimeField()
     location = models.TextField(max_length=5000)
-    
+
 #class IngredientReview(models.Model):
     #id = models.AutoField(primary_key=True)
     #user = models.ForeignKey(User)
@@ -114,7 +113,7 @@ class Hop(models.Model):
     pub_date = models.DateTimeField('date published')
     def __str__(self):
         return self.name
-    
+
 class Grain(models.Model):
     origin = models.CharField(max_length=200, null=True, blank=True, default="")
     recommendMash = models.CharField(max_length=200)
@@ -140,7 +139,7 @@ class Grain(models.Model):
     pub_date = models.DateTimeField('date published')
     def __str__(self):
         return self.name
-	
+
 class Yeast(models.Model):
 	name = models.CharField(max_length=200, null=True, blank=True, default="")
 	type = models.CharField(max_length=200)

@@ -37,8 +37,12 @@ class CreateUserView(View):
 		if(password == ''):
 			return HttpResponse('A password must be supplied')
 
+		email = data.get('email','')
+		if(email == ''):
+			return HttpResponse('An email must be supplied')
+
 		# Create and try to save the new user object
-		user = User(username=username,password=password)
+		user = User(username=username,password=password,email=email)
 		try:
 			user.save();
 		except IntegrityError:
@@ -51,7 +55,6 @@ class CreateUserView(View):
 		profile = Profile(user=user,
 			age = data.get('age',''),
 			location = data.get('location',''),
-			name = data.get('name',''),
 			yearsExperience = data.get('yearsExperience',''),
 			avatarURL = data.get('avatarURL',''),
 			reg_date=timezone.now(),
@@ -81,8 +84,6 @@ class CreateUserView(View):
 			return 'age must be supplied'
 		if profile.location == '':
 			return 'location must be supplied'
-		if profile.name == '':
-			return 'name must be supplied'
 		if profile.yearsExperience == '':
 			return 'yearsExperience must be supplied'
 		if profile.avatarURL == '':
