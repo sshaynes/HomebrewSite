@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.utils.html import escape
 from django.views.generic import View
 from django.contrib.sessions.backends.db import SessionStore
+from django.contrib.auth import authenticate, login
 from HomebrewSite.tools.DateTools import DateTools
 import json
 import datetime
@@ -14,7 +15,7 @@ logger = logging.getLogger(__name__)
 class LoginView(View):
 
 	def get(self, request, *args, **kwargs):
-		#pending successful login
+		#what does a get do here?
 		s = SessionStore()
 		s['last_login'] = DateTools.getNowAsString()
 		s['userid'] = 1	#this should be set to the user id returned from authentication
@@ -25,12 +26,35 @@ class LoginView(View):
 
 
 	def post(self, request, *args, **kwargs):
+		contType = "content_type='application/json'"
 
-		#pending successful login
-		s = SessionStore()
-		s['last_login'] = DateTools.getNowAsString()
-		s['userid'] = 1	#this should be set to the user id returned from authentication
-		s.save()
-		response = s.session_key + " | Last_login: " + s['last_login']
+		# Make sure we're dealing with AJAX request
+		if not request.is_ajax():
+				return HttpResponse('Expected an XMLHttpRequest')
 
-		return HttpResponse(response)
+		# Parse data from JSON
+		data = json.loads(request.body)
+
+		username = data.get('user','')
+		if(username == ''):
+			return ApiTools.HttpJsonReponse('422', 'A username must be supplied')
+		#how are we passing password? I know not flattext but I wonder how we handle logging in here.
+		password = data.get('password','')
+		if(password == ''):
+			return ApiTools.HttpJsonReponse('422', 'A password must be supplied')
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				#do we want to redirect to another page here or just return a session and have the UI handle it?
+				login(request, user)
+				s = SessionStore()
+				s['last_login'] = DateTools.getNowAsString()
+				s['userid'] = user.username
+				s.save()
+				response = s.session_key + " | Last_login: " + s['last_login']
+				return HttpResponse(response)
+			else:
+				# Will we ever have inactive users?
+				return ApiTools.HttpJsonReponse('422', 'inactive user')	
+		else:
+			return ApiTools.HttpJsonReponse('422', 'Invalid username or password')	
