@@ -4,6 +4,7 @@ from django.views.generic import View
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.auth import authenticate, login
 from HomebrewSite.tools.DateTools import DateTools
+from HomebrewSite.tools.ApiTools import ApiTools
 import json
 import datetime
 # import the logging library
@@ -26,7 +27,7 @@ class LoginView(View):
 
 
 	def post(self, request, *args, **kwargs):
-		contType = "content_type='application/json'"
+		# contType = "content_type='application/json'"
 
 		# Make sure we're dealing with AJAX request
 		if not request.is_ajax():
@@ -35,14 +36,19 @@ class LoginView(View):
 		# Parse data from JSON
 		data = json.loads(request.body)
 
+		# return ApiTools.HttpJsonReponse('500', request.body);
+
 		username = data.get('user','')
+
 		if(username == ''):
 			return ApiTools.HttpJsonReponse('422', 'A username must be supplied')
 		#how are we passing password? I know not flattext but I wonder how we handle logging in here.
 		password = data.get('password','')
 		if(password == ''):
 			return ApiTools.HttpJsonReponse('422', 'A password must be supplied')
+
 		user = authenticate(username=username, password=password)
+		# If username/password combo is invalid it returns 'None'
 		if user is not None:
 			if user.is_active:
 				#do we want to redirect to another page here or just return a session and have the UI handle it?
@@ -51,10 +57,10 @@ class LoginView(View):
 				s['last_login'] = DateTools.getNowAsString()
 				s['userid'] = user.username
 				s.save()
-				response = s.session_key + " | Last_login: " + s['last_login']
-				return HttpResponse(response)
+				return ApiTools.HttpJsonReponse('200', 'Login successful!')
 			else:
 				# Will we ever have inactive users?
-				return ApiTools.HttpJsonReponse('422', 'inactive user')	
+				return ApiTools.HttpJsonReponse('422', 'Inactive user')
+
 		else:
-			return ApiTools.HttpJsonReponse('422', 'Invalid username or password')	
+			return ApiTools.HttpJsonReponse('422', 'Invalid username or password')

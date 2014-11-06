@@ -23,7 +23,7 @@ class CreateUserView(View):
 	@csrf_exempt
 	def post(self, request, *args, **kwargs):
 
-		contType = "content_type='application/json'"
+		# contType = "content_type='application/json'"
 
 		# Make sure we're dealing with AJAX request
 		if not request.is_ajax():
@@ -45,7 +45,8 @@ class CreateUserView(View):
 			return ApiTools.HttpJsonReponse('422', 'An email must be supplied')
 
 		# Create and try to save the new user object
-		user = User(username=username,password=password,email=email)
+		# This method automatically hashes the password
+		user = User.objects.create_user(username=username,password=password,email=email)
 		try:
 			user.save();
 		except IntegrityError as e:
