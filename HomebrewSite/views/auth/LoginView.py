@@ -5,10 +5,12 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.auth import authenticate, login
 from HomebrewSite.tools.DateTools import DateTools
 from HomebrewSite.tools.ApiTools import ApiTools
+from HomebrewSite.tools.GeneralTools import GeneralTools
 import json
 import datetime
 # import the logging library
 import logging
+import sys
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -34,9 +36,12 @@ class LoginView(View):
 				return HttpResponse('Expected an XMLHttpRequest')
 
 		# Parse data from JSON
-		data = json.loads(request.body)
-
-		# return ApiTools.HttpJsonReponse('500', request.body);
+		try:
+			data = json.loads(request.body.decode("utf-8"))
+		except:
+			logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
+			return ApiTools.HttpJsonReponse('400', GeneralTools.getExceptionInfo(sys.exc_info()))
+		logger.warning(data)
 
 		username = data.get('user','')
 
