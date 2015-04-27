@@ -11,6 +11,8 @@ from HomebrewSite.views.user.CreateUserView import CreateUserView
 from HomebrewSite.views.user.DeleteUserView import DeleteUserView
 from HomebrewSite.views.user.UpdateUserPasswordView import UpdateUserPasswordView
 from HomebrewSite.views.user.UpdateUserProfileView import UpdateUserProfileView
+from HomebrewSite.views.user.UserAndProfileInfoAPI import UserAndProfileInfoAPI
+from HomebrewSite.views.recipes.RecipeView import RecipeView
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -32,5 +34,7 @@ urlpatterns = patterns('',
 	url(r'^user/create/$', CreateUserView.as_view()),
 	url(r'^user/delete/$', DeleteUserView.as_view()),
 	url(r'^user/updatePassword/$', UpdateUserPasswordView.as_view()),
-	url(r'^user/updateProfile/$', UpdateUserProfileView.as_view())
+	url(r'^user/updateProfile/$', UpdateUserProfileView.as_view()),
+	url(r'^user/info/$', UserAndProfileInfoAPI.as_view()),
+	url(r'^recipe/$', RecipeView.as_view())
 )
