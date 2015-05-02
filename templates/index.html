@@ -1,27 +1,109 @@
-{% extends "base.html" %}
-{% load i18n %}
-{% block extra_head %}
-  <meta name="keywords" content=""/>
-  <meta name="description" content=""/>
-  <script src="{{ STATIC_URL }}js/controllers.js"></script>
-  <script src="{{ STATIC_URL }}js/services.js"></script>
-  <script src="{{ STATIC_URL }}js/filters.js"></script>
-  <script src="{{ STATIC_URL }}js/directives.js"></script>
-{% endblock %}
-{% block content %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="app" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="app" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="A social site for brewing">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+	<title ng-bind="title"></title>
+
+	<!-- inject-vendor:css -->
+	<link rel="stylesheet" href="{{ STATIC_URL }}bower_components/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="{{ STATIC_URL }}bower_components/font-awesome/css/font-awesome.min.css" />
+	<link href="{{ STATIC_URL }}bower_components/toastr/toastr.css" rel="stylesheet" />
+	<!-- endinject -->
+
+	<!-- inject:css -->
+	<link rel="stylesheet" href="{{ STATIC_URL }}assets/css/app.css"/>
+	<!-- endinject -->
+</head>
+<body>
+
+	<div>
+		<div ng-include="'{{ STATIC_URL }}app/layout/master-template.html'"></div>
+        <div id="splash-page" data-ng-show="false">
+			<div class="page-splash">
+				<div class="page-splash-message" ng-bind="welcomeMessage">
+
+				</div>
+				<div class="progress progress-striped active page-progress-bar">
+					<div class="bar"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
-  <div ng-header></div>
+    <!-- inject-vendor:js -->
+    <script src="{{ STATIC_URL }}bower_components/jquery/dist/jquery.min.js"></script>
+  	<script src="{{ STATIC_URL }}bower_components/angular/angular.js"></script>
+  	<script src="{{ STATIC_URL }}bower_components/angular-cookies/angular-cookies.js"></script>
+  	<script src="{{ STATIC_URL }}bower_components/angular-route/angular-route.js"></script>
+    <script src="{{ STATIC_URL }}bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="{{ STATIC_URL }}bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}bower_components/toastr/toastr.js"></script>
+    <script src="{{ STATIC_URL }}bower_components/extras.angular.plus/ngplus-overlay.js"></script>
+<!--
+    <script src="/bower_components/moment/moment.js"></script>
+     -->
+    <!-- endinject -->
 
-  <div id="main-content" class="container">
 
-    <div ng-view></div>
+	<!-- inject:js -->
+	<!-- Bootstrapping -->
+	<script src="{{ STATIC_URL }}app/app.module.js"></script>
 
-  </div>
+	<!-- Reusable Blocks/Modules -->
 
+	<script src="{{ STATIC_URL }}app/shared/exception/exception.module.js"></script>
+	<script src="{{ STATIC_URL }}app/shared/exception/exception-handler.provider.js"></script>
+	<script src="{{ STATIC_URL }}app/shared/exception/exception.js"></script>
 
-<div ng-footer></div>
-{% endblock %}
-{% block extra_content %}
-<script type="text/javascript"></script>
-{% endblock %}
+	<script src="{{ STATIC_URL }}app/shared/logger/logger.module.js"></script>
+	<script src="{{ STATIC_URL }}app/shared/logger/logger.js"></script>
+	<script src="{{ STATIC_URL }}app/shared/router/router.module.js"></script>
+	<script src="{{ STATIC_URL }}app/shared/router/routehelper.js"></script>
+
+	<!-- core module -->
+	<script src="{{ STATIC_URL }}app/core/core.module.js"></script>
+	<script src="{{ STATIC_URL }}app/core/constants.js"></script>
+	<script src="{{ STATIC_URL }}app/core/config.js"></script>
+
+	<!-- layout -->
+	<script src="{{ STATIC_URL }}app/layout/layout.module.js"></script>
+	<script src="{{ STATIC_URL }}app/layout/main.js"></script>
+	<script src="{{ STATIC_URL }}app/layout/app-header.js"></script>
+	<script src="{{ STATIC_URL }}app/layout/app-footer.js"></script>
+	<!--
+	<script src="{{ STATIC_URL }}app/layout/layout.directive.js"></script>
+	<script src="{{ STATIC_URL }}app/layout/sidebar.js"></script> -->
+
+	<!--widgets-->
+
+	<!--
+	<script src="{{ STATIC_URL }}app/widgets/widgets.module.js"></script>
+	<script src="{{ STATIC_URL }}app/widgets/ccSidebar.js"></script>
+	<script src="{{ STATIC_URL }}app/widgets/ccSpinner.js"></script>
+	<script src="{{ STATIC_URL }}app/widgets/ccWidgetClose.js"></script>
+	<script src="{{ STATIC_URL }}app/widgets/ccWidgetHeader.js"></script>
+	<script src="{{ STATIC_URL }}app/widgets/ccWidgetMinimize.js"></script>
+	-->
+
+	<!-- home -->
+	<script src="{{ STATIC_URL }}app/home/home.module.js"></script>
+	<script src="{{ STATIC_URL }}app/home/home.route.js"></script>
+	<script src="{{ STATIC_URL }}app/home/home.js"></script>
+
+	<!-- user -->
+	<script src="{{ STATIC_URL }}app/user/user.module.js"></script>
+	<script src="{{ STATIC_URL }}app/user/user.route.js"></script>
+	<script src="{{ STATIC_URL }}app/user/user-repository.factory.js"></script>
+	<script src="{{ STATIC_URL }}app/user/user.js"></script>
+	<!-- endinject -->
+
+</body>
+</html>
