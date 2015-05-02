@@ -19,8 +19,21 @@ class Category(models.Model):
 class Recipe(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User)
-    category = models.ForeignKey(Category)
+    styleid = models.CharField(max_length=5000)
     description = models.CharField(max_length=5000)
+    substyleid = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    boilTime = models.IntegerField()
+    units = models.CharField(max_length=200) #imperial or metric
+    method  = models.CharField(max_length=200) #all grain or extract
+    batchSize = models.IntegerField()
+    boilSize = models.IntegerField()
+    abv = models.IntegerField()
+    ibu = models.IntegerField()
+    userid = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+    def __str__(self):
+        return self.name
 
 class Conversation(models.Model):
     id = models.AutoField(primary_key=True)
@@ -141,28 +154,28 @@ class Grain(models.Model):
         return self.name
 
 class Yeast(models.Model):
-	name = models.CharField(max_length=200, null=True, blank=True, default="")
-	type = models.CharField(max_length=200)
-	form = models.CharField(max_length=200)
-	laboratory = models.CharField(max_length=200)
-	amount = models.CharField(max_length=200)
-	amount_is_weight = models.CharField(max_length=200)
-	product_id = models.CharField(max_length=200)
-	min_temperature = models.CharField(max_length=200)
-	max_temperature = models.CharField(max_length=200)
-	flocculation = models.CharField(max_length=200, null=True, blank=True, default="")
-	attenuation = models.CharField(max_length=200)
-	notes = models.CharField(max_length=2000, null=True, blank=True, default="")
-	best_for = models.CharField(max_length=200)
-	times_cultured = models.CharField(max_length=200)
-	max_reuse = models.CharField(max_length=200)
-	add_to_secondary = models.CharField(max_length=200)
-	display_amount = models.CharField(max_length=200, blank=True, null=True, default="")
-	disp_min_temp = models.CharField(max_length=200)
-	disp_max_temp = models.CharField(max_length=200)
-	pub_date = models.DateTimeField('date published')
-	def __str__(self):
-		return self.name
+    name = models.CharField(max_length=200, null=True, blank=True, default="")
+    type = models.CharField(max_length=200)
+    form = models.CharField(max_length=200)
+    laboratory = models.CharField(max_length=200)
+    amount = models.CharField(max_length=200)
+    amount_is_weight = models.CharField(max_length=200)
+    product_id = models.CharField(max_length=200)
+    min_temperature = models.CharField(max_length=200)
+    max_temperature = models.CharField(max_length=200)
+    flocculation = models.CharField(max_length=200, null=True, blank=True, default="")
+    attenuation = models.CharField(max_length=200)
+    notes = models.CharField(max_length=2000, null=True, blank=True, default="")
+    best_for = models.CharField(max_length=200)
+    times_cultured = models.CharField(max_length=200)
+    max_reuse = models.CharField(max_length=200)
+    add_to_secondary = models.CharField(max_length=200)
+    display_amount = models.CharField(max_length=200, blank=True, null=True, default="")
+    disp_min_temp = models.CharField(max_length=200)
+    disp_max_temp = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+    def __str__(self):
+        return self.name
 
 class RecipeHop(models.Model):
     id = models.AutoField(primary_key=True)

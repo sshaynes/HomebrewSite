@@ -1,5 +1,5 @@
 from django.contrib import admin
-from homebrew.models import Hop, Grain, Yeast, Profile
+from homebrew.models import Hop, Grain, Yeast, Profile, Recipe
 
 class UserProfileAdmin(admin.ModelAdmin):
   fieldsets = [
@@ -90,8 +90,28 @@ class YeastAdmin(admin.ModelAdmin):
 	list_display = ('name', 'pub_date', 'notes')
 	list_filter = ['pub_date']
 	search_fields = ['name']
+class RecipeAdmin(admin.ModelAdmin):
+	fieldsets = [
+		(None,               {'fields': ['userid']}),
+		(None,               {'fields': ['styleid']}),
+		(None,               {'fields': ['substyleid']}),
+		(None,               {'fields': ['description']}),
+		(None,               {'fields': ['boilTime']}),
+		(None,               {'fields': ['method']}),
+		(None,               {'fields': ['batchSize']}),
+		(None,               {'fields': ['boilSize']}),
+		(None,               {'fields': ['ibu']}),
+		(None,               {'fields': ['abv']}),
+		(None,               {'fields': ['id']}),
+		(None,               {'fields': ['name']}),
+		('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
+	]
+	list_display = ('name', 'styleid', 'substyleid')
+	list_filter = ['pub_date']
+	search_fields = ['name']
 
 admin.site.register(Hop, HopAdmin)
 admin.site.register(Grain, GrainAdmin)
 admin.site.register(Yeast, YeastAdmin)
 admin.site.register(Profile, UserProfileAdmin)
+admin.site.register(Recipe, RecipeAdmin)

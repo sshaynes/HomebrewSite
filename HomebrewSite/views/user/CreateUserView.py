@@ -10,6 +10,7 @@ import sys
 import datetime
 from django.utils import timezone
 from HomebrewSite.tools.ApiTools import ApiTools
+from HomebrewSite.tools.GeneralTools import GeneralTools
 
 # import the logging library
 import logging
@@ -28,10 +29,8 @@ class CreateUserView(View):
 		# Make sure we're dealing with AJAX request
 		if not request.is_ajax():
 				return HttpResponse('Expected an XMLHttpRequest')
-
 		# Parse data from JSON
-		data = json.loads(request.body)
-
+		data = json.loads(request.body.decode("utf-8"))
 		username = data.get('user','')
 		if(username == ''):
 			return ApiTools.HttpJsonReponse('422', 'A username must be supplied')
@@ -48,12 +47,13 @@ class CreateUserView(View):
 		# This method automatically hashes the password
 		user = User.objects.create_user(username=username,password=password,email=email)
 		# user = User(username=username,password=password,email=email)
+    #
 		try:
 			user.save();
 		except IntegrityError as e:
 			return ApiTools.HttpJsonReponse('422', 'Username is already taken!')
 		except:
-			return ApiTools.HttpJsonReponse('400', sys.exc_info())
+			return ApiTools.HttpJsonReponse('400', GeneralTools.getExceptionInfo(sys.exc_info()))
 
 
 		# Create new user profile
@@ -74,7 +74,7 @@ class CreateUserView(View):
 			profile.save()
 			return ApiTools.HttpJsonReponse('200', 'Profile succesfully created')
 		except:
-			return ApiTools.HttpJsonReponse('400', 'Profile failed to create with error: ' + sys.exc_info())
+			return ApiTools.HttpJsonReponse('400', 'Profile failed to create with error: ' + GeneralTools.getExceptionInfo(sys.exc_info()))
 
 		#return render(request, 'index.html', {}) may need this for csrf
 

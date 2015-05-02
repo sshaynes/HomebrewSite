@@ -1,0 +1,99 @@
+update recipe:
+ styleid
+ substyleid
+ description
+ boiltime
+ units
+ method
+ batchsize
+ boilsize
+add ingredients:
+ recipeid
+ ingredientid
+
+remove ingredients:
+ recipeid
+ ingredientid
+create recipe:
+ user id
+ style id
+ substyle id
+ description
+ boil time
+ units
+ method
+ batch size
+ boil size
+  
+ return success
+
+update recipe:
+ recipe id
+ style id
+ substyle id
+ description
+ boil time
+ units
+ method
+ batch size
+ boil size
+  
+ return success
+  
+delete recipe:
+ recipe id
+  
+ return success
+  
+get recipe details:
+ recipe id
+  
+ return recipe object
+ 	recipe id
+ 	user id
+ 	name
+ 	style
+ 	description
+ 	batch size
+ 	boil size
+ 	abv
+ 	ibu
+ 	boil time
+ 	units
+ 	method
+  
+get recipe list by user:
+ user id
+  
+ return list of recipes:
+ 	recipeid
+ 	user id
+ 	user name
+ 	name
+ 	style
+ 	size
+ 	abv
+ 	ibu
+  
+add ingredients:
+ recipeid
+ ingredientid
+  
+ return success
+
+remove ingredients:
+ recipeid
+ ingredientid
+  
+ return success
+  
+get categories:
+ return list of categories:
+ 	category id
+ 	name
+
+get subcategories:
+ category id
+  
+ return list of subcategories:
+ 	name
