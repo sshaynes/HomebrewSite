@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 class CreateUserView(View):
 
-	@csrf_exempt
+	# @csrf_exempt
 	def post(self, request, *args, **kwargs):
 
 		# contType = "content_type='application/json'"
