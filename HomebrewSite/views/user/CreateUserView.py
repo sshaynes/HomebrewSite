@@ -70,7 +70,7 @@ class CreateUserView(View):
 			return HttpResponse(errorMsg)
 		logger.warning(profile)
 		try:
-			# profile.save()
+			profile.save()
 			return ApiTools.HttpJsonReponse('200', 'Profile successfully created')
 		except:
 			return ApiTools.HttpJsonReponse('400', 'Profile failed to create with error: ' + GeneralTools.getExceptionInfo(sys.exc_info()))
