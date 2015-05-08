@@ -43,12 +43,11 @@ class CreateUserView(View):
 		if(email == ''):
 			return ApiTools.HttpJsonReponse('422', 'An email must be supplied')
 
-		# Create and try to save the new user object
+
+		# Attempt to create and save the new user object
 		# This method automatically hashes the password
-		user = User.objects.create_user(username=username,password=password,email=email)
-		# user = User(username=username,password=password,email=email)
-    #
 		try:
+			user = User.objects.create_user(username=username,password=password,email=email)
 			user.save();
 		except IntegrityError as e:
 			return ApiTools.HttpJsonReponse('422', 'Username is already taken!')
@@ -71,8 +70,8 @@ class CreateUserView(View):
 			return HttpResponse(errorMsg)
 		logger.warning(profile)
 		try:
-			profile.save()
-			return ApiTools.HttpJsonReponse('200', 'Profile succesfully created')
+			# profile.save()
+			return ApiTools.HttpJsonReponse('200', 'Profile successfully created')
 		except:
 			return ApiTools.HttpJsonReponse('400', 'Profile failed to create with error: ' + GeneralTools.getExceptionInfo(sys.exc_info()))
 
