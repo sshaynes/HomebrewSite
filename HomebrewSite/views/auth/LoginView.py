@@ -34,14 +34,14 @@ class LoginView(View):
 
 		# Make sure we're dealing with AJAX request
 		if not request.is_ajax():
-				return HttpResponse('Expected an XMLHttpRequest')
+				return HttpJsonReponseBadRequest('Expected an XMLHttpRequest')
 
 		# Parse data from JSON
 		try:
 			data = json.loads(request.body.decode("utf-8"))
 		except:
 			logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
-			return ApiTools.HttpJsonReponse('400', GeneralTools.getExceptionInfo(sys.exc_info()))
+			return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
 		logger.warning(data)
 
 		# return ApiTools.HttpJsonReponse('500', request.body);
@@ -49,11 +49,11 @@ class LoginView(View):
 		username = data.get('user','')
 
 		if(username == ''):
-			return ApiTools.HttpJsonReponse('422', 'A username must be supplied')
+			return ApiTools.HttpJsonReponseMissingParameter('A username must be supplied')
 		#how are we passing password? I know not flattext but I wonder how we handle logging in here.
 		password = data.get('password','')
 		if(password == ''):
-			return ApiTools.HttpJsonReponse('422', 'A password must be supplied')
+			return ApiTools.HttpJsonReponseMissingParameter('A password must be supplied')
 
 		user = authenticate(username=username, password=password)
 		# If username/password combo is invalid it returns 'None'
@@ -65,10 +65,10 @@ class LoginView(View):
 				s['last_login'] = DateTools.getNowAsString()
 				s['userid'] = user.username
 				s.save()
-				return ApiTools.HttpJsonReponse('200', 'Login successful!')
+				return ApiTools.HttpJsonReponse('Login successful!')
 			else:
 				# Will we ever have inactive users?
-				return ApiTools.HttpJsonReponse('422', 'Inactive user')
+				return ApiTools.HttpJsonReponseUnauthorized('Inactive user')
 
 		else:
-			return ApiTools.HttpJsonReponse('422', 'Invalid username or password')
+			return ApiTools.HttpJsonReponseUnauthorized('Invalid username or password')
