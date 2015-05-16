@@ -17,7 +17,7 @@ class Category(models.Model):
     name = models.CharField(max_length=200)
 
 class Recipe(models.Model):
-    id = models.AutoField(primary_key=True)
+    uuid = models.CharField(max_length=36)
     user = models.ForeignKey(User)
     styleid = models.CharField(max_length=5000)
     description = models.CharField(max_length=5000)

@@ -14,6 +14,7 @@ import uuid
 from django.utils import timezone
 from HomebrewSite.tools.ApiTools import ApiTools
 from HomebrewSite.tools.GeneralTools import GeneralTools
+from django.core import serializers
 
 # import the logging library
 import logging
@@ -24,22 +25,24 @@ logger = logging.getLogger(__name__)
 class RecipeView(View):
 
 	def get(self, request, *args, **kwargs):
-		try:
-			data = json.loads(request.body.decode("utf-8"))
-		except:
-			logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
-			return ApiTools.HttpJsonReponse('400', GeneralTools.getExceptionInfo(sys.exc_info()))
+		# try:
+			# data = json.loads(request.body.decode("utf-8"))
+		# except:
+			# logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
+			# return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
 		
-		recipe = Recipe.objects.filter(id=data.get('id'))
+		# recipe = Recipe.objects.filter(id=data.get('id'))
+		
+		recipe = serializers.serialize('json',Recipe.objects.all())
 		logger.warning(recipe)
-		ApiTools.HttpJsonReponse("here");
+		return ApiTools.HttpJsonReponse(recipe);
 		
 	def patch(self, request, *args, **kwargs):
 		try:
 			data = json.loads(request.body.decode("utf-8"))
 		except:
 			logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
-			return ApiTools.HttpJsonReponse('400', GeneralTools.getExceptionInfo(sys.exc_info()))
+			return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
 		recipe = Recipe.objects.filter(id=data.get('id'))	
 		recipe.userid = data.get('userid','')
 		recipe.styleid = data.get('styleid','')
@@ -59,18 +62,13 @@ class RecipeView(View):
 	def post(self, request, *args, **kwargs):
 		# contType = "content_type='application/json'"
 
-		# Make sure we're dealing with AJAX request
-		if not request.is_ajax():
-				return HttpResponse('Expected an XMLHttpRequest')
-
 		# Parse data from JSON
 		try:
 			data = json.loads(request.body.decode("utf-8"))
 		except:
 			logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
-			return ApiTools.HttpJsonReponse('400', GeneralTools.getExceptionInfo(sys.exc_info()))
-		logger.warning(data)
-
+			return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
+		
 		useridi = data.get('userid','')
 		styleidi = data.get('styleid','')
 		substyleidi = data.get('substyleid','')
@@ -84,10 +82,14 @@ class RecipeView(View):
 		abvi = data.get('abv','')
 		ibui = data.get('ibu','')
 		namei = data.get('name','')
-
-		if(name == ''):
-			return ApiTools.HttpJsonReponse('422', 'A name must be supplied')
 		
-		recipeToSave = Recipes(userid=useridi, styleid=styleidi, substyleid=substyleidi, description=descriptioni, boilTime=boilTimei, units=unitsi,
-		method=methodi, batchSize=batchSizei, boilSize=boilSizei, abv=abv, ibu=ibui, namei=name, id=uuid.uuid4());
+		user_idi = request.user.id;
+		if(user_idi == None):			
+			user_idi = 1; # for testing, should throw an exception here
+		if(namei == ''):
+			return ApiTools.HttpJsonReponseMissingParameter('A name must be supplied')
+		logger.warning(uuid.uuid4())
+		recipeToSave = Recipe(userid=useridi, styleid=styleidi, substyleid=substyleidi, description=descriptioni, boilTime=boilTimei, units=unitsi,
+		method=methodi, batchSize=batchSizei, boilSize=boilSizei, abv=abvi, ibu=ibui, name=namei, user_id=user_idi, pub_date=timezone.now(), uuid=uuid.uuid4());
 		recipeToSave.save();
+		return ApiTools.HttpJsonReponse("success");

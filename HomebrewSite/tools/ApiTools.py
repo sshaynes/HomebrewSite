@@ -4,6 +4,11 @@ from django.http import HttpResponseNotFound
 from django.http import HttpResponseForbidden
 import json
 
+# import the logging library
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 class ApiTools:
 
