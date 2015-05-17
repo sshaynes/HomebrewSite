@@ -10,7 +10,6 @@ import json
 import os
 import sys
 import datetime
-import uuid
 from django.utils import timezone
 from HomebrewSite.tools.ApiTools import ApiTools
 from HomebrewSite.tools.GeneralTools import GeneralTools
@@ -25,16 +24,15 @@ logger = logging.getLogger(__name__)
 class RecipeView(View):
 
 	def get(self, request, *args, **kwargs):
-		# try:
-			# data = json.loads(request.body.decode("utf-8"))
-		# except:
-			# logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
-			# return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
-		
-		# recipe = Recipe.objects.filter(id=data.get('id'))
-		
-		recipe = serializers.serialize('json',Recipe.objects.all())
-		logger.warning(recipe)
+		if(len(kwargs) == 1):
+			#return the item passed in
+			try:
+				recipe = serializers.serialize('json', Recipe.objects.filter(id=kwargs['pk']))
+			except:
+				return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
+		else:
+			#return all objects
+			recipe = serializers.serialize('json',Recipe.objects.all())
 		return ApiTools.HttpJsonReponse(recipe);
 		
 	def patch(self, request, *args, **kwargs):
@@ -84,12 +82,11 @@ class RecipeView(View):
 		namei = data.get('name','')
 		
 		user_idi = request.user.id;
-		if(user_idi == None):			
+		if(user_idi == None):
 			user_idi = 1; # for testing, should throw an exception here
 		if(namei == ''):
 			return ApiTools.HttpJsonReponseMissingParameter('A name must be supplied')
-		logger.warning(uuid.uuid4())
 		recipeToSave = Recipe(userid=useridi, styleid=styleidi, substyleid=substyleidi, description=descriptioni, boilTime=boilTimei, units=unitsi,
-		method=methodi, batchSize=batchSizei, boilSize=boilSizei, abv=abvi, ibu=ibui, name=namei, user_id=user_idi, pub_date=timezone.now(), uuid=uuid.uuid4());
+		method=methodi, batchSize=batchSizei, boilSize=boilSizei, abv=abvi, ibu=ibui, name=namei, user_id=user_idi, pub_date=timezone.now());
 		recipeToSave.save();
 		return ApiTools.HttpJsonReponse("success");

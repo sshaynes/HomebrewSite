@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import uuid
 
 # Create your models here.
 
@@ -13,11 +14,11 @@ class Profile(models.Model):
     update_date = models.DateTimeField('date updated')
 
 class Category(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200)
 
 class Recipe(models.Model):
-    uuid = models.CharField(max_length=36)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User)
     styleid = models.CharField(max_length=5000)
     description = models.CharField(max_length=5000)
@@ -36,67 +37,67 @@ class Recipe(models.Model):
         return self.name
 
 class Conversation(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     started = models.DateTimeField()
 
 class UserFollowing(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     followingUser = models.ForeignKey(User, related_name='followingUser')
     followedUser = models.ForeignKey(User, related_name='followedUser')
 
 class RecipeReview(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User)
     text = models.TextField()
     rating = models.IntegerField()
 
 class RecipeStep(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     recipe = models.ForeignKey(Recipe)
     time = models.DateTimeField()
     text = models.TextField(max_length=5000)
 
 class RecipeAttribute(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     recipe = models.ForeignKey(Recipe)
     name = models.TextField()
 
 class Unit(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.TextField(max_length=50)
     abbreviation = models.TextField(max_length=10)
 
 class Vendor(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.TextField(max_length=500)
     url = models.TextField(max_length=5000)
     location = models.TextField(max_length=5000)
 
 class VendorReview(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User)
     vendor = models.ForeignKey(Vendor)
     rating = models.IntegerField()
     description = models.TextField(max_length=5000)
 
 class Post(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user = models.ForeignKey(User)
     text = models.TextField()
 
 class Message(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     authorUser = models.ForeignKey(User)
     conversation = models.ForeignKey(Conversation)
 
 class UserConversation(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     conversation = models.ForeignKey(Conversation)
     user = models.ForeignKey(User)
     joined = models.DateTimeField()
 
 class New(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     authorUser = models.ForeignKey(User)
     text = models.TextField(max_length=5000)
     date = models.DateTimeField()
@@ -178,14 +179,14 @@ class Yeast(models.Model):
         return self.name
 
 class RecipeHop(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     recipe = models.ForeignKey(Recipe)
     hop = models.ForeignKey(Hop)
     unit = models.ForeignKey(Unit)
     quantity = models.DecimalField(decimal_places=2,max_digits=6)
 
 class RecipeGrain(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     recipe = models.ForeignKey(Recipe)
     grain = models.ForeignKey(Grain)
     unit = models.ForeignKey(Unit)

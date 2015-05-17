@@ -102,7 +102,6 @@ class RecipeAdmin(admin.ModelAdmin):
 		(None,               {'fields': ['boilSize']}),
 		(None,               {'fields': ['ibu']}),
 		(None,               {'fields': ['abv']}),
-		(None,               {'fields': ['uuid']}),
 		(None,               {'fields': ['name']}),
 		('Date information', {'fields': ['pub_date'], 'classes': ['collapse']}),
 	]

@@ -36,5 +36,6 @@ urlpatterns = patterns('',
 	url(r'^user/updatePassword/$', UpdateUserPasswordView.as_view()),
 	url(r'^user/updateProfile/$', UpdateUserProfileView.as_view()),
 	url(r'^user/info/$', UserAndProfileInfoAPI.as_view()),
+	url(r'^recipe/(?P<pk>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/', RecipeView.as_view()),
 	url(r'^recipe/$', RecipeView.as_view())
 )
