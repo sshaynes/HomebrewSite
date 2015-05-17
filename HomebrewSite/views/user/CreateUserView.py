@@ -50,7 +50,6 @@ class CreateUserView(View):
 		# This method automatically hashes the password
 		try:
 			user = User.objects.create_user(username=username,password=password,email=email)
-			user.save();
 		except IntegrityError as e:
 			return ApiTools.HttpJsonReponseBadRequest('Username is already taken!')
 		except:
