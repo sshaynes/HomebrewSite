@@ -33,15 +33,15 @@ class RecipeView(View):
 		else:
 			#return all objects
 			recipe = serializers.serialize('json',Recipe.objects.all())
-		return ApiTools.HttpJsonReponse(recipe);
-		
+		return ApiTools.HttpJsonReponseWithJsonData(recipe);
+
 	def patch(self, request, *args, **kwargs):
 		try:
 			data = json.loads(request.body.decode("utf-8"))
 		except:
 			logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
 			return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
-		recipe = Recipe.objects.filter(id=data.get('id'))	
+		recipe = Recipe.objects.filter(id=data.get('id'))
 		recipe.userid = data.get('userid','')
 		recipe.styleid = data.get('styleid','')
 		recipe.substyleid = data.get('substyleid','')
@@ -56,7 +56,7 @@ class RecipeView(View):
 		recipe.ibu = data.get('ibu','')
 		recipe.name = data.get('name','')
 		recipe.save();
-		
+
 	def post(self, request, *args, **kwargs):
 		# contType = "content_type='application/json'"
 
@@ -66,7 +66,7 @@ class RecipeView(View):
 		except:
 			logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
 			return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
-		
+
 		useridi = data.get('userid','')
 		styleidi = data.get('styleid','')
 		substyleidi = data.get('substyleid','')
@@ -80,7 +80,7 @@ class RecipeView(View):
 		abvi = data.get('abv','')
 		ibui = data.get('ibu','')
 		namei = data.get('name','')
-		
+
 		user_idi = request.user.id;
 		if(user_idi == None):
 			user_idi = 1; # for testing, should throw an exception here

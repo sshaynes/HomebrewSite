@@ -17,7 +17,15 @@ class ApiTools:
   def HttpJsonReponse(message):
     status = 200;
 
-    data = '{"status": 200, "message": ' + message + '}';
+    data = {"status": status, "message": message};
+    return HttpResponse(json.dumps(data))
+
+
+  # Returns Status 200 OK
+  @staticmethod
+  def HttpJsonReponseWithJsonData(json):
+
+    data = '{"status": 200, "message": ' + json + '}';
     return HttpResponse(data)
 
 
