@@ -16,8 +16,9 @@ class ApiTools:
   @staticmethod
   def HttpJsonReponse(message):
     status = 200;
-    data = {'status': 200, 'message': message}
-    return HttpResponse(json.dumps(data))
+
+    data = '{"status": 200, "message": ' + message + '}';
+    return HttpResponse(data)
 
 
   # Returns Status 400
