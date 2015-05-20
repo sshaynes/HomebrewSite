@@ -12,6 +12,7 @@ class Profile(models.Model):
     avatarURL = models.CharField(max_length=5000)
     reg_date = models.DateTimeField('date registered')
     update_date = models.DateTimeField('date updated')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
 class Category(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

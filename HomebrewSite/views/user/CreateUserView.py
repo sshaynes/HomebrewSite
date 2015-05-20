@@ -11,6 +11,7 @@ import datetime
 from django.utils import timezone
 from HomebrewSite.tools.ApiTools import ApiTools
 from HomebrewSite.tools.GeneralTools import GeneralTools
+from django.core import serializers
 
 # import the logging library
 import logging
@@ -26,12 +27,12 @@ class CreateUserView(View):
 
 		# contType = "content_type='application/json'"
 
-		# Make sure we're dealing with AJAX request
-		if not request.is_ajax():
-				return HttpJsonReponseBadRequest('Expected an XMLHttpRequest')
-
 		# Parse data from JSON
-		data = json.loads(request.body.decode("utf-8"))
+		try:
+			data = json.loads(request.body.decode("utf-8"))
+		except:
+			logger.warning(GeneralTools.getExceptionInfo(sys.exc_info()))
+			return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
 		username = data.get('user','')
 		if(username == ''):
 			return ApiTools.HttpJsonReponseMissingParameter('A username must be supplied')
@@ -73,15 +74,25 @@ class CreateUserView(View):
 
 		try:
 			profile.save()
-			return ApiTools.HttpJsonReponse('Profile successfully created')
 		except:
 			return ApiTools.HttpJsonReponseBadRequest('Profile failed to create with error: ' + GeneralTools.getExceptionInfo(sys.exc_info()))
+		
+		return ApiTools.HttpJsonReponse(serializers.serialize('json', Profile.objects.filter(id=profile.id)))
 
 		#return render(request, 'index.html', {}) may need this for csrf
 
 
 	def get(self, request, *args, **kwargs):
-		ApiTools.HttpJsonReponse('2b1189a188b44ad18c35e113ac6ceead')
+		if(len(kwargs) == 1):
+			#return the item passed in
+			try:
+				user = serializers.serialize('json', Profile.objects.filter(id=kwargs['pk']))
+			except:
+				return ApiTools.HttpJsonReponseBadRequest(GeneralTools.getExceptionInfo(sys.exc_info()))
+		else:
+			#return all objects
+			user = serializers.serialize('json', Profile.objects.all())
+		return ApiTools.HttpJsonReponseWithJsonData(user)
 
 
 	@staticmethod

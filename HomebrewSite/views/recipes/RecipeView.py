@@ -33,7 +33,7 @@ class RecipeView(View):
 		else:
 			#return all objects
 			recipe = serializers.serialize('json',Recipe.objects.all())
-		return ApiTools.HttpJsonReponseWithJsonData(recipe);
+		return ApiTools.HttpJsonReponseWithJsonData(recipe)
 
 	def patch(self, request, *args, **kwargs):
 		try:
@@ -88,5 +88,35 @@ class RecipeView(View):
 			return ApiTools.HttpJsonReponseMissingParameter('A name must be supplied')
 		recipeToSave = Recipe(userid=useridi, styleid=styleidi, substyleid=substyleidi, description=descriptioni, boilTime=boilTimei, units=unitsi,
 		method=methodi, batchSize=batchSizei, boilSize=boilSizei, abv=abvi, ibu=ibui, name=namei, user_id=user_idi, pub_date=timezone.now());
-		recipeToSave.save();
-		return ApiTools.HttpJsonReponse("success");
+		
+		errorMsg = RecipeView.validateRecipe(recipeToSave)
+		if errorMsg != '':
+			return ApiTools.HttpJsonReponseBadRequest(errorMsg)
+			
+		try:
+			recipeToSave.save();
+		except:
+			return ApiTools.HttpJsonReponseBadRequest('Recipe failed to create with error: ' + GeneralTools.getExceptionInfo(sys.exc_info()))
+			
+		return ApiTools.HttpJsonReponse(serializers.serialize('json', Recipe.objects.filter(id=recipeToSave.id)));
+		
+
+	@staticmethod			
+	def validateRecipe(recipeToSave):
+		if recipeToSave.styleid == '':
+			return 'Style must be supplied.'
+		if recipeToSave.boilTime == '':
+			return 'Boil time must be supplied.'
+		if recipeToSave.units == '':
+			return 'Units must be supplied.'
+		if recipeToSave.method == '':
+			return 'Method must be supplied.'
+		if recipeToSave.batchSize == '':
+			return 'Batch size must be supplied.'
+		if recipeToSave.boilSize == '':
+			return 'Boil Size must be supplied.'
+		if recipeToSave.abv == '':
+			return 'ABV must be supplied.'
+		if recipeToSave.ibu == '':
+			return 'IBU must be supplied.'
+		return ''
